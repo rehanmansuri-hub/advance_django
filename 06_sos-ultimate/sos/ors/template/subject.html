@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+{% include "header.html" %}
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ form.id }}">
+
+    <div align="center">
+        <h1>
+            {% if form.id > 0 %}
+            Update Subject
+            {% else %}
+            Add Subject
+            {% endif %}
+        </h1>
+
+        {% if form.message %}
+            {% if form.error %}
+            <h3><font color="red">{{ form.message }}</font></h3>
+            {% else %}
+            <h3><font color="green">{{ form.message }}</font></h3>
+            {% endif %}
+        {% endif %}
+
+        <table>
+            <tr>
+                <th>Name:</th>
+                <td><input type="text" name="name" value="{{ form.name }}"></td>
+                <td><font color="red">{{ form.input_error.name }}</font></td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td><input type="text" name="description" value="{{ form.description }}"></td>
+                <td><font color="red">{{ form.input_error.description }}</font></td>
+            </tr>
+            <tr>
+                <th>Course:</th>
+                <td>{{ preload_data.course_select|safe }}</td>
+                <td><font color="red">{{ form.input_error.course_id }}</font></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    {% if form.id > 0 %}
+                    <input type="submit" name="operation" value="update">
+                    <button type="button"><a href="/ors/SubjectList/" style="text-decoration: none; color: black;">list</a></button>
+                    {% else %}
+                    <input type="submit" name="operation" value="save">
+                    <button type="button"><a href="/ors/Subject/" style="text-decoration: none; color: black;">reset</a></button>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+{% include "footer.html" %}
+
+</body>
+</html>

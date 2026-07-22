@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>College</title>
+</head>
+<body>
+
+{% include "header.html" %}
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ form.id }}">
+
+    <div align="center">
+
+        <h1>
+            {% if form.id and form.id != '0' %}
+            Update College
+            {% else %}
+            Add College
+            {% endif %}
+        </h1>
+        {% if form.message %}
+        <h3>
+            <font color="green">{{ form.message }}</font>
+        </h3>
+        {% endif %}
+
+        <table>
+
+            <tr>
+                <th>Name:</th>
+                <td><input type="text" name="name" value="{{form.name}}"></td>
+                <td><font color="red">{{ form.input_error.name }}</font></td>
+            </tr>
+
+            <tr>
+                <th>Adress:</th>
+                <td><input type="text" name="address" value="{{form.address}}"></td>
+                <td><font color="red">{{ form.input_error.address }}</font></td>
+            </tr>
+            <tr>
+                <th>State:</th>
+                <td><input type="text" name="state" value="{{form.state}}"></td>
+                <td><font color="red">{{ form.input_error.state }}</font></td>
+            </tr>
+            <tr>
+                <th>City:</th>
+                <td><input type="text" name="city" value="{{form.city}}"></td>
+                <td><font color="red">{{ form.input_error.city }}</font></td>
+            </tr>
+            <tr>
+                <th>Phone Number:</th>
+                <td><input type="text" name="phoneNumber" value="{{form.phoneNumber}}"></td>
+                <td><font color="red">{{ form.input_error.phoneNumber }}</font></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    {% if form.id and form.id != '0' %}
+                    <input type="submit" name="operation" value="update">
+                    <button><a href="/ors/CollegeList/">list</a></button>
+                    {% else %}
+                    <input type="submit" name="operation" value="save">
+                    <button><a href="/ors/College/">reset</a></button>
+                    {% endif %}
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</form>
+
+{% include "footer.html" %}
+
+</body>
+</html>

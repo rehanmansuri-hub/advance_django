@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TimeTable List</title>
+</head>
+<body>
+
+{% include "header.html" %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div align="center">
+        <h1>TimeTable List</h1>
+    </div>
+
+    <div align="center">
+        <table>
+            <tr>
+                <th>Semester :</th>
+                <td>
+                    <input type="text"
+                           name="semester"
+                           value="{{ form.semester }}"
+                           placeholder="Enter Semester">
+                </td>
+
+                <td>
+                    <input type="submit"
+                           name="operation"
+                           value="search">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <br>
+
+    {% if form.list|length > 0 %}
+
+    <table border="1" width="100%">
+
+        <tr>
+            <th>S.No.</th>
+            <th>Exam Date</th>
+            <th>Exam Time</th>
+            <th>Semester</th>
+            <th>Course</th>
+            <th>Subject</th>
+            <th>Edit | Delete</th>
+        </tr>
+
+        {% for l in form.list %}
+
+        <tr>
+
+            <td align="center">
+                {{ form.index|add:forloop.counter }}
+            </td>
+
+            <td align="center">
+                {{ l.exam_date }}
+            </td>
+
+            <td align="center">
+                {{ l.exam_time }}
+            </td>
+
+            <td align="center">
+                {{ l.semester }}
+            </td>
+
+            <td align="center">
+                {{ l.course_name }}
+            </td>
+
+            <td align="center">
+                {{ l.subject_name }}
+            </td>
+
+            <td align="center">
+
+                <a href="/ors/TimeTable/edit/{{ l.id }}/">
+                    Edit
+                </a>
+
+                |
+
+                <a href="/ors/TimeTableList/delete/{{ l.id }}/">
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <table width="100%">
+
+        <tr>
+
+            <td width="25%">
+                <input type="submit"
+                       name="operation"
+                       value="previous"
+                       {% if not form.has_previous %}disabled{% endif %}>
+            </td>
+
+            <td align="center" width="50%">
+                <b>Page : {{ form.page_no }}</b>
+            </td>
+
+            <td align="right" width="25%">
+                <input type="submit"
+                       name="operation"
+                       value="next"
+                       {% if not form.has_next %}disabled{% endif %}>
+            </td>
+
+        </tr>
+
+    </table>
+
+    <input type="hidden" name="pageNo" value="{{ form.page_no }}">
+
+    {% else %}
+
+    <div align="center">
+        <font color="red">
+            <h3>No Record Found</h3>
+        </font>
+    </div>
+
+    {% endif %}
+
+</form>
+
+{% include "footer.html" %}
+
+</body>
+</html>

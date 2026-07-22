@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TimeTable</title>
+</head>
+<body>
+
+{% include "header.html" %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="hidden" name="id" value="{{ form.id }}">
+
+    <div align="center">
+
+        <h1>
+            {% if form.id > 0 %}
+                Update TimeTable
+            {% else %}
+                Add TimeTable
+            {% endif %}
+        </h1>
+
+        {% if form.message %}
+            {% if form.error %}
+                <h3><font color="red">{{ form.message }}</font></h3>
+            {% else %}
+                <h3><font color="green">{{ form.message }}</font></h3>
+            {% endif %}
+        {% endif %}
+
+        <table>
+
+            <tr>
+                <th>Exam Date :</th>
+                <td>
+                    <input type="date" name="exam_date" value="{{ form.exam_date }}">
+                </td>
+                <td>
+                    <font color="red">{{ form.input_error.exam_date }}</font>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Exam Time :</th>
+                <td>
+                    <select name="exam_time">
+                        <option value="">--Select--</option>
+                        <option value="08:00 AM">08:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="04:00 PM">04:00 PM</option>
+                    </select>
+                </td>
+                <td>
+                    <font color="red">{{ form.input_error.exam_time }}</font>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Semester :</th>
+                <td>
+                    <select name="semester">
+                        <option value="">--Select--</option>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                    </select>
+                </td>
+                <td>
+                    <font color="red">{{ form.input_error.semester }}</font>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Course :</th>
+                <td>
+                    {{ preload_data.course_select|safe }}
+                </td>
+                <td>
+                    <font color="red">{{ form.input_error.course_id }}</font>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Subject :</th>
+                <td>
+                    {{ preload_data.subject_select|safe }}
+                </td>
+                <td>
+                    <font color="red">{{ form.input_error.subject_id }}</font>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+
+                <td>
+
+                    {% if form.id > 0 %}
+
+                    <input type="submit" name="operation" value="update">
+
+                    <button type="button">
+                        <a href="/ors/TimeTableList/" style="text-decoration:none;color:black;">
+                            List
+                        </a>
+                    </button>
+
+                    {% else %}
+
+                    <input type="submit" name="operation" value="save">
+
+                    <button type="button">
+                        <a href="/ors/TimeTable/" style="text-decoration:none;color:black;">
+                            Reset
+                        </a>
+                    </button>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</form>
+
+{% include "footer.html" %}
+
+</body>
+</html>

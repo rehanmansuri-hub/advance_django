@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course</title>
+</head>
+<body>
+
+{% include "header.html" %}
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ form.id }}">
+
+    <div align="center">
+        <h1>
+            {% if form.id > 0 %}
+            Update Course
+            {% else %}
+            Add Course
+            {% endif %}
+        </h1>
+
+        {% if form.message %}
+            {% if form.error %}
+            <h3><font color="red">{{ form.message }}</font></h3>
+            {% else %}
+            <h3><font color="green">{{ form.message }}</font></h3>
+            {% endif %}
+        {% endif %}
+
+        <table>
+            <tr>
+                <th>Name:</th>
+                <td><input type="text" name="name" value="{{ form.name }}"></td>
+                <td><font color="red">{{ form.input_error.name }}</font></td>
+            </tr>
+            <tr>
+                <th>Duration:</th>
+                <td><input type="text" name="duration" value="{{ form.duration }}"></td>
+                <td><font color="red">{{ form.input_error.duration }}</font></td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td><input type="text" name="description" value="{{ form.description }}"></td>
+                <td><font color="red">{{ form.input_error.description }}</font></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    {% if form.id > 0 %}
+                    <input type="submit" name="operation" value="update">
+                    <button><a href="/ors/CourseList/">list</a></button>
+                    {% else %}
+                    <input type="submit" name="operation" value="save">
+                    <button><a href="/ors/Course/">reset</a></button>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+{% include "footer.html" %}
+
+</body>
+</html>
